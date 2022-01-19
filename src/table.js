@@ -6,13 +6,15 @@ import {  Table } from 'antd';
 export default function TableData() {
     const [apiData, setApiData]= useState([])
     const [totalPages, setTotalPages] = useState(1)
+    const [page, setPage] = useState(1)
+    const [pageSize, setPageSize] = useState(10)
 
     useEffect( () => {
-        fetchData(1);
-    }, [])
+        fetchData();
+    }, [page,pageSize])
 
-    const fetchData = (page) => {
-        fetch(`https://api.instantwebtools.net/v1/passenger?page=${page}&size=10`)
+    const fetchData = () => {
+        fetch(`https://api.instantwebtools.net/v1/passenger?page=${page}&size=${pageSize}`)
         .then(res=>{
             res.json().then((response=>{
                 setApiData(response.data)
@@ -43,10 +45,11 @@ export default function TableData() {
         columns={columns}
         dataSource={apiData}
         pagination={{
-            pageSize : 10,
+            pageSize : pageSize,
             total : totalPages,
-            onChange: (page)=>{
-                fetchData(page)
+            onChange:(page,pageSize)=>{
+                setPage(page)
+                setPageSize(pageSize)
             }
         }}
       />
