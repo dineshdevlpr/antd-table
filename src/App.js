@@ -1,11 +1,15 @@
-import logo from './logo.svg';
 import './App.css';
 import TableData from './table';
+import { ContextProvider } from './contextFile';
 
 function App() {
+
+  //console.log("from app")
   return (
   <div style={{ margin: "50px" }}>
-    <TableData/>
+    <ContextProvider>
+      <TableData/>
+    </ContextProvider>
   </div>
   );
 }
